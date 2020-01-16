@@ -20,3 +20,6 @@
 [submodule "libraries/vl53l0x-arduino"]
 	path = libraries/vl53l0x-arduino
 	url = git@github.com:gkanwar/vl53l0x-arduino.git
+[submodule "libraries/SparkFun_MPU-9250_Breakout_Arduino_Library"]
+	path = libraries/SparkFun_MPU-9250_Breakout_Arduino_Library
+	url = https://github.com/sparkfun/SparkFun_MPU-9250_Breakout_Arduino_Library

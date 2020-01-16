@@ -41,6 +41,8 @@
 #define GYRO_CODE 'G'
 #define GYRO_READ_CODE 'R'
 #define IR_CODE 'I'
+#define IMU_CODE 'i'
+#define IMU_READ_CODE 'R'
 #define MOTOR_CODE 'M'
 #define MOTOR_WRITE_CODE 'W'
 #define SERVO_CODE 'S'
