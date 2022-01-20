@@ -2,6 +2,7 @@
 #define PID_H
 
 #include "Utils.h"
+#include "WProgram.h"
 
 /**
  *  PID controller class
@@ -11,23 +12,23 @@ class PIDController
 public:
     /**
      *  
-     * @param P - Proportional gain 
-     * @param I - Integral gain
+     * @param K - Loop gain 
+     * @param Ti - Integral time
      * @param limit - Maximum output value
-     * @param Ts - Loop time
      */
-    PIDController(float P, float I, float limit, float Ts);
+    PIDController(float P, float I, float limit);
+    ~PIDController() = default;
     
     float operator() (float error);
 
-    float P; //!< Proportional gain 
-    float I; //!< Integral gain 
+    float K; //!< Loop gain 
+    float Ti; //!< Integral time 
     float limit; //!< Maximum output value
-    float Ts; //!< Loop time in microseconds
 
 protected:
     float error_prev; //!< last tracking error value
     float integral_prev; //!< last integral component value
+    float timestamp_prev; //!< last time stamp
 };
 
 #endif
