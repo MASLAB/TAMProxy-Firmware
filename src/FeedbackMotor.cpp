@@ -74,7 +74,7 @@ void FeedbackMotor::doUpkeep() {
         integral = _constrain(integral, -limit, limit);
 
         // sum all the components
-        float output = proportional;
+        float output = proportional + integral;
         // antiwindup - limit the output variable
         output = _constrain(output, -limit, limit);
 
