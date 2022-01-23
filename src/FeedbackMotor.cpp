@@ -30,10 +30,11 @@ FeedbackMotor::FeedbackMotor(uint8_t motorPinA, uint8_t motorPinB, uint8_t motor
 std::vector<uint8_t> FeedbackMotor::handleRequest(std::vector<uint8_t> &request) {
     if (request[0] == FEEDBACK_MOTOR_WRITE_CODE) {
         if (request.size() != 5) return {REQUEST_LENGTH_INVALID_CODE};
-            if (request[1] != 0)
-                desiredAngle = 2*M_PI*((request[2]<<16) + (request[3]<<8) + request[4])/255;
-            else
-                desiredAngle = -2*M_PI*((request[2]<<16) + (request[3]<<8) + request[4])/255;
+
+        float f;
+        uint8_t b[] = {request[1], request[2], request[3], request[4]};
+        memcpy(&f, &b, sizeof(f));
+        desiredAngle = 0.5*f; // JOHNZ: strange off by two error
     }
     if (request[0] == ENCODER_READ_CODE) {
         if (request.size() != 1) return {REQUEST_LENGTH_INVALID_CODE};
@@ -64,7 +65,7 @@ void FeedbackMotor::doUpkeep() {
 
         float encoderAngle = 2.0*M_PI*encCount/(CPR*GEAR_RATIO);
         
-        float error = desiredAngle - encoderAngle;
+        float error = M_PI/180.0*desiredAngle - encoderAngle;
 
         float proportional = K * error;
         // Tustin transform of the integral part
@@ -79,20 +80,15 @@ void FeedbackMotor::doUpkeep() {
         output = _constrain(output, -limit, limit);
 
         // determine direction of spin
-        if(output > 0)
+        if (output > 0)
         {
             digitalWrite(_motorPinA, 0);
             digitalWrite(_motorPinB, 1);
         }
-        else if(output < 0)
-        {
-            digitalWrite(_motorPinA, 1);
-            digitalWrite(_motorPinB, 0);
-        }
         else
         {
             digitalWrite(_motorPinA, 1);
-            digitalWrite(_motorPinB, 1);
+            digitalWrite(_motorPinB, 0);
         }
 
         // set 8-bit PWM to control speed; value between 0 and 255
