@@ -105,9 +105,14 @@ std::vector<uint8_t> DeviceList::add(std::vector<uint8_t>& request) {
                 d = new DFRMotor(request[2], request[3], request[4]);
             } else { return {REQUEST_LENGTH_INVALID_CODE}; };
             break;
-        case FEEDBACK_MOTOR_CODE:
+        case POS_FEEDBACK_MOTOR_CODE:
             if (request.size() == 7) {
-                d = new FeedbackMotor(request[2], request[3], request[4], request[5], request[6]);
+                d = new FeedbackMotor(request[2], request[3], request[4], request[5], request[6], false);
+            } else { return {REQUEST_LENGTH_INVALID_CODE}; };
+            break;
+        case VEL_FEEDBACK_MOTOR_CODE:
+            if (request.size() == 7) {
+                d = new FeedbackMotor(request[2], request[3], request[4], request[5], request[6], true);
             } else { return {REQUEST_LENGTH_INVALID_CODE}; };
             break;
         case ENCODER_CODE:

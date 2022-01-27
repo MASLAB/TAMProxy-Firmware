@@ -23,3 +23,6 @@
 [submodule "libraries/SparkFun_MPU-9250_Breakout_Arduino_Library"]
 	path = libraries/SparkFun_MPU-9250_Breakout_Arduino_Library
 	url = https://github.com/sparkfun/SparkFun_MPU-9250_Breakout_Arduino_Library.git
+[submodule "libraries/mpu6050"]
+	path = libraries/mpu6050
+	url = https://github.com/ElectronicCats/mpu6050.git
