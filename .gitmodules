@@ -15,7 +15,7 @@
 	url = https://github.com/PaulStoffregen/Wire
 [submodule "cores"]
 	path = cores
-	url = https://github.com/mitchgu/cores
+	url = https://github.com/PaulStoffregen/cores.git
 	branch = more-usb-buffers
 [submodule "libraries/vl53l0x-arduino"]
 	path = libraries/vl53l0x-arduino

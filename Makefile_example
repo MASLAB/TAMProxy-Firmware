@@ -6,13 +6,14 @@ TEENSY = ??
 
 OPTIMIZE_LEVEL = -O
 
-OPTIONS = -DUSB_SERIAL -DLAYOUT_US_ENGLISH -DUSING_MAKEFILE -DARDUINO=10800 -DTEENSYDUINO=134
+OPTIONS = -DUSB_SERIAL -DLAYOUT_US_ENGLISH -DUSING_MAKEFILE -DARDUINO=10805 -DTEENSYDUINO=159
 
 # directory to build in
 BUILDDIR = $(abspath $(CURDIR)/build)
 
-# path location for Teensy 3 core
-COREPATH = cores/teensy3
+# path location for Teensy core
+# TODO: select based on $(TEENSY)
+COREPATH = cores/teensy4
 
 # path location for Arduino libraries
 LIBRARYPATH = libraries
@@ -36,7 +37,7 @@ else
     else
     	# Other UNIX Machine
     	# This should probably be changed to where you extracted the Arduino app after downloading
-    	ARDUINOPATH = ${HOME}/arduino-1.8.0
+    	ARDUINOPATH = ${HOME}/arduino-1.8.19
     endif
 endif
 
@@ -54,10 +55,10 @@ REBOOTPATH = $(TOOLSPATH)/teensy_reboot
 #************************************************************************
 
 # CPPFLAGS = compiler options for C and C++
-CPPFLAGS = -Wall -g $(OPTIMIZE_LEVEL) -ffunction-sections -fdata-sections -nostdlib -mthumb -MMD $(OPTIONS) -I$(COREPATH)
+CPPFLAGS = -Wall -g $(OPTIMIZE_LEVEL) -ffunction-sections -fdata-sections -mthumb -MMD $(OPTIONS) -I$(COREPATH)
 
 # compiler options for C++ only
-CXXFLAGS = -std=gnu++0x -felide-constructors -fno-exceptions -fno-rtti
+CXXFLAGS = -std=gnu++17 -felide-constructors -fno-exceptions -fno-rtti
 
 # compiler options for C only
 CFLAGS =
@@ -95,6 +96,11 @@ else ifeq ($(TEENSY), 36)
     LDSCRIPT = $(COREPATH)/mk66fx1m0.ld
     LDFLAGS += -mcpu=cortex-m4 -mfloat-abi=hard -mfpu=fpv4-sp-d16 -T$(LDSCRIPT)
     LIBS += -larm_cortexM4lf_math
+else ifeq ($(TEENSY), 41)
+    CPPFLAGS += -D__IMXRT1062__ -DARDUINO_TEENSY41 -mcpu=cortex-m7 -mfloat-abi=hard -mfpu=fpv5-d16 -DF_CPU=600000000
+    LDSCRIPT = $(COREPATH)/imxrt1062_t41.ld
+    LDFLAGS += -mcpu=cortex-m7 -mfloat-abi=hard -mfpu=fpv4-sp-d16 -T$(LDSCRIPT)
+    LIBS += -larm_cortexM7lfsp_math -lstdc++
 else
     $(error Choose a valid target Teensy board (Makefile line 5))
 endif
