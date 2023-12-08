@@ -14,6 +14,14 @@ DeviceList *dl;
 
 void setup() {
     analogReadResolution(ADC_RESOLUTION);
+#ifdef FLEXPWM_NUM_PINS
+    analogWriteResolution(FLEXPWM_RESOLUTION);
+
+    int pins[FLEXPWM_NUM_PINS] = FLEXPWM_PINS;
+    for (int i = 0; i < FLEXPWM_NUM_PINS; i++) {
+        analogWriteFrequency(pins[i], FLEXPWM_FREQUENCY);
+    }
+#else
     analogWriteResolution(PWM_RESOLUTION);
     analogWriteFrequency(FTM0PIN, PWM0_FREQUENCY);
     analogWriteFrequency(FTM1PIN, PWM1_FREQUENCY);
@@ -21,6 +29,7 @@ void setup() {
     #ifdef FTM3PIN
     analogWriteFrequency(FTM3PIN, PWM3_FREQUENCY);
     #endif
+#endif
     pc = new PacketController;
     dl = new DeviceList;
 }
