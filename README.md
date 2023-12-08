@@ -9,21 +9,21 @@ TAMProxy (Totally A Microcontroller Proxy) is a microcontroller project offloads
 For example, running the classic Arduino blink sketch using the python host software is as simple as:
 
 	class Blink(Sketch):
-	
+
 	    def setup(self):
 	        self.led = DigitalOutput(self.tamp, 13)
 	        self.led_timer = Timer()
 	        self.led_state = False
-	
+
 	    def loop(self):
 	        if self.led_timer.millis() > 1000:
 	            self.led_timer.reset()
 	            self.led_state = not self.led_state
 	            self.led.write(self.led_state)
-	
+
     sketch = Blink()
     sketch.run()
-    
+
 With most similar libraries that control Arduino pins over USB, the communication is of a stop and wait nature. When the user sends a request, their program blocks while waiting for a response from the Arduino. With USB serial latency often in the millisecond range, this puts a big bottleneck on the user's code.
 
 TAMProxy does things differently by having a formalized variable-length packet structure and implementing a sliding window protocol on the host side to send them. TAMProxy can release several packets and simultaneously listen for the responses of packets sent earlier, which significantly increases throughput. All the communcations code runs in another process, so the user's sketch never blocks. In preliminary testing, throughput reaches around 17,000 packets per second at maximum when running PyPy 4.0.1 on a 2013 MBP.
@@ -59,8 +59,8 @@ Dependencies
 ------------
 
 - GNU Make (Probably already have if you're running OSX/Linux)
-- [Arduino IDE 1.8.0](https://www.arduino.cc/en/Main/OldSoftwareReleases#previous) - needed to install Teensyduino and probably good to have anyway
-- [Teensyduino 1.3.4](https://www.pjrc.com/teensy/td_download.html) - Contains the necessary ARM C compilers, Arduino-compatible libraries, and programmers for the Teensy
+- [Arduino IDE 1.8.19](https://www.arduino.cc/en/Main/OldSoftwareReleases#previous) - needed to install Teensyduino and probably good to have anyway
+- [Teensyduino 1.5.8](https://www.pjrc.com/teensy/td_download.html) - Contains the necessary ARM C compilers, Arduino-compatible libraries, and programmers for the Teensy
 
 ### Windows Support
 Unfortunately, getting the Makefile to work with an existing Teensyduino install is difficult on Windows, so the Makefile currently only works with OSX or Linux.
