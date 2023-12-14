@@ -1,8 +1,8 @@
 # The name of your project (used to name the compiled .hex file)
 TARGET = $(notdir $(CURDIR))
 
-# The Teensy board you're targeting (30,31,32,35,36, or LC)
-TEENSY = ??
+# The Teensy board you're targeting (30, 31, 32, 35, 36, 41, or LC)
+TEENSY = 41
 
 OPTIMIZE_LEVEL = -O
 
@@ -37,18 +37,18 @@ else
     else
     	# Other UNIX Machine
     	# This should probably be changed to where you extracted the Arduino app after downloading
-    	ARDUINOPATH = ${HOME}/arduino-1.8.19
+    	ARDUINOPATH = ${HOME}/.arduino15
     endif
 endif
 
 # path location for Teensy Loader, teensy_post_compile and teensy_reboot
-TOOLSPATH = $(ARDUINOPATH)/hardware/tools
+TOOLSPATH = $(ARDUINOPATH)/packages/teensy/tools
 
 # path location for the arm-none-eabi compiler
-COMPILERPATH = $(TOOLSPATH)/arm/bin
+COMPILERPATH = $(TOOLSPATH)/teensy-compile/11.3.1/arm/bin
 
-POSTCOMPILEPATH = $(TOOLSPATH)/teensy_post_compile
-REBOOTPATH = $(TOOLSPATH)/teensy_reboot
+POSTCOMPILEPATH = $(TOOLSPATH)/teensy-tools/1.58.0/teensy_post_compile
+REBOOTPATH = $(TOOLSPATH)/teensy-tools/1.58.0/teensy_reboot
 
 #************************************************************************
 # Settings below this point usually do not need to be edited
