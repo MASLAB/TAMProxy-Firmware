@@ -18,6 +18,13 @@ InstallArduino () {
     echo ""
 }
 
+InstallUdev () {
+    echo "Installing udev rules..."
+    curl https://www.pjrc.com/teensy/00-teensy.rules --output teensy.rules
+    sudo mv teensy.rules /etc/udev/rules.d/00-teensy.rules
+    echo ""
+}
+
 #####################################
 # ENSURE DEPENDENCIES ARE INSTALLED #
 #####################################
@@ -25,11 +32,11 @@ InstallArduino () {
 echo "Checking dependencies..."
 
 # Check if `make` is installed
-make --version > /dev/null || { echo "GNU Make is not installed"; InstallMake; }
+make --version > /dev/null || InstallMake
 
 # Check if Arduino 2.x is installed
 ARDUINO_IDE=~/arduino-2.2.1/arduino-ide
-[ -f $ARDUINO_IDE ] || { echo "Arduino 2.2.1 is not installed"; InstallArduino; }
+[ -f $ARDUINO_IDE ] || InstallArduino
 
 # Direct the user to install Teensyduino 1.58
 $ARDUINO_IDE &> /dev/null &
@@ -67,8 +74,7 @@ echo ""
 
 # Download udev rules
 echo "Updating udev rules..."
-[ -f /etc/udev/rules.d/00-teensy.rules ] || { curl https://www.pjrc.com/teensy/00-teensy.rules --output teensy.rules;
-    sudo mv teensy.rules /etc/udev/rules.d/00-teensy.rules; }
+[ -f /etc/udev/rules.d/00-teensy.rules ] || InstallUdev
 echo ""
 
 #################################
