@@ -14,6 +14,7 @@ InstallArduino () {
     echo "Installing Arduino 2.2.1..."
     curl https://downloads.arduino.cc/arduino-ide/arduino-ide_2.2.1_Linux_64bit.zip --output ~/arduino-2.2.1.zip
     unzip ~/arduino-2.2.1.zip
+    rm ~/arduino-2.2.1.zip
     mv arduino-ide_2.2.1_Linux_64bit ~/arduino-2.2.1
     echo ""
 }
@@ -51,7 +52,8 @@ echo "3. Click 'OK'."
 echo "4. Go to Tools > Board > Boards Manager."
 echo "5. Search 'teensy'."
 echo "6. Select 'Teensy by Paul Stoffregen' > Install."
-echo "7. Close Arduino IDE."
+echo "7. Wait for installation to complete."
+echo "8. Close Arduino IDE."
 echo ""
 read -p "Press Enter to continue setup >> "
 echo ""
