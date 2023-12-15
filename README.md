@@ -40,6 +40,7 @@ However, an easy alternative is using the Arduino IDE to compile and upload. Sim
 ## Quick Start (Teensy 4.1)
 
 - Clone this repository.
+- Pull the `teensy4` branch: `git pull origin teensy4`.
 - Make the setup script executable: `chmod 755 setup.sh`.
 - Execute the setup script: `./setup.sh`.  Follow the on-screen instructions.
 - Plug your Teensy in.
