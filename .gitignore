@@ -1,12 +1,7 @@
-# Make output
 *.o
 *.d
 *.hex
 *.elf
-
-# Make build directory
-/build
-
 # Text editor session files
 *~
 Makefile

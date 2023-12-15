@@ -1,8 +1,10 @@
-# TAMProxy Firmware
+TAMProxy Firmware
+=================
 
-## Purpose
+Purpose
+-------
 
-TAMProxy (Totally A Microcontroller Proxy) is a microcontroller project that offloads configuration, sampling, or setting of microcontroller devices/peripherals to a host computer through exchanged USB packets.
+TAMProxy (Totally A Microcontroller Proxy) is a microcontroller project offloads configuration, sampling, or setting of microcontroller devices/peripherals to a host computer through exchange USB packets.
 
 For example, running the classic Arduino blink sketch using the python host software is as simple as:
 
@@ -29,59 +31,14 @@ TAMProxy does things differently by having a formalized variable-length packet s
 TAMProxy was designed for use in MIT's MASLAB 2016 competition (autonomous robotics). It currently only supports the Teensy 3.x boards, but support for Arduinos is probably possible if development continues.
 
 ### Limitations
+Right now this firmware only works with the Teensy 3.x, with the support of the Teensyduino libraries available from PJRC
+
 Communicating with certain peripherals that need high-speed or advanced features such as interrupts, SPI, or I2C will be difficult to use if support for that peripheral isn't built into TAMProxy yet.
 
 Adding support for these peripherals is best done by extending this firmware by adding a new peripheral class, as described below. Despite the relatively high throughput of the USB packet protocol, trying to handle these high speed features oh the host side is probably infeasible.
 
-### Windows Support
-Unfortunately, getting the Makefile to work with an existing Teensyduino install is difficult on Windows, so the Makefile currently only works with OSX or Linux.
-However, an easy alternative is using the Arduino IDE to compile and upload. Simply open `src.ino` in the Arduino IDE and compile and upload.
-
-## Quick Start (Teensy 4.1)
-
-- Clone this repository.
-- Make the setup script executable: `chmod 755 setup.sh`.
-- Execute the setup script: `./setup.sh`.  Follow the on-screen instructions.
-- Plug your Teensy in.
-- Upload TAMProxy: `make upload`.  You may have to press the programming button on the Teensy to enter programming mode.
-
-**Tip**: Once you've run `make upload` once, if you keep the Teensy Loader open you can skip the `make upload` step and just press the Teensy's programming button to reprogram it with a newer `.hex` file.
-
-**Further tip**: If you're running Sublime Text or another editor with build settings, you can have Sublime open the entire folder and set the build system to `Makefile`, then compile the project with the build shortcut (command B or ctrl B).
-
-### TAMProxy Setup Script
-
-TAMProxy 4.1 comes with a brand-new `setup.sh` that sets up TAMProxy for you.
-- [x] Install GNU Make
-- [x] Install Arduino 2.2.1
-- [ ] Install TAMProxy 1.58 (currently must be done manually)
-- [x] Initialize Git submodules
-- [x] Update Git submodules
-- [x] Copy example Makefile
-- [x] Copy Teensy 4.1 configuration header file
-- [x] Make TAMProxy 4.1
-
-## Manual Setup
-
-- Ensure that you have the dependencies. If you're on Linux you may have to setup a [udev rule](https://www.pjrc.com/teensy/loader_linux.html) for the Teensy.
-- Clone this repository, then initialize the submodules
-	- `git submodule init`
-	- `git submodule update`
-- Copy `Makefile_example` to `Makefile` Then open `Makefile` and:
-	- Confirm that the Arduino application path is correct for your system.
-	- Specify which Teensy board you're building for on line 5.
-- In the `src` folder, copy either `config_example_teensy32.h` or `config_example_teensy_35.h` to `config.h` depending on which board you're using. These can be generated and customized using `TAMProxy_pyHost`.
-- Run `make` to build the firmware and output an Intel `.hex` file.
-- Plug your Teensy in.
-- Run `make upload` to open the Teensy Loader programmer with the `.hex` file and program the Teensy. You may have to press the programming button on the Teensy to enter programming mode.
-
-## Dependencies
-
-- GNU Make (Probably already have if you're running OSX/Linux)
-- [Arduino IDE 2.x](https://www.arduino.cc/en/software) - needed to install Teensyduino
-- [Teensyduino 1.5.8](https://www.pjrc.com/teensy/td_download.html) - Contains the necessary ARM C compilers, Arduino-compatible libraries, and programmers for the Teensy
-
-## Supported Devices
+Supported Devices
+-----------------
 - [x] Digital input
 - [x] Digital output
 - [x] Analog input
@@ -98,20 +55,52 @@ TAMProxy 4.1 comes with a brand-new `setup.sh` that sets up TAMProxy for you.
 - [x] Pololu VL53L0X time-of-flight distance sensor (I2C)
 - [x] Sparkfun MPU-9250 IMU breakout (I2C)
 
-## Extending the Firmware
+Dependencies
+------------
+
+- GNU Make (Probably already have if you're running OSX/Linux)
+- [Arduino IDE 1.8.19](https://www.arduino.cc/en/Main/OldSoftwareReleases#previous) - needed to install Teensyduino and probably good to have anyway
+- [Teensyduino 1.5.8](https://www.pjrc.com/teensy/td_download.html) - Contains the necessary ARM C compilers, Arduino-compatible libraries, and programmers for the Teensy
+
+### Windows Support
+Unfortunately, getting the Makefile to work with an existing Teensyduino install is difficult on Windows, so the Makefile currently only works with OSX or Linux.
+However, an easy alternative is using the Arduino IDE to compile and upload. Simply open `src.ino` in the Arduino IDE and compile and upload.
+
+Quick Start
+-----------
+
+- Ensure that you have the dependencies. If you're on Linux you may have to setup a [udev rule](https://www.pjrc.com/teensy/loader_linux.html) for the Teensy.
+- Clone this repository, then initialize the submodules
+	- `git submodule init`
+	- `git submodule update`
+- Copy `Makefile_example` to `Makefile` Then open `Makefile` and:
+	- Confirm that the Arduino application path is correct for your system.
+	- Specify which Teensy board you're building for on line 5.
+- In the `src` folder, copy either `config_example_teensy32.h` or `config_example_teensy_35.h` to `config.h` depending on which board you're using. These can be generated and customized using `TAMProxy_pyHost`.
+- Run `make` to build the firmware and output an Intel `.hex` file.
+- Plug your Teensy in.
+- Run `make upload` to open the Teensy Loader programmer with the `.hex` file and program the Teensy. You may have to press the programming button on the Teensy to enter programming mode.
+
+**Tip**: Once you've run `make upload` once, if you keep the Teensy Loader open you can skip the `make upload` step and just press the Teensy's programming button to reprogram it with a newer `.hex` file.
+
+**Further tip**: If you're running Sublime Text or another editor with build settings, you can have Sublime open the entire folder and set the build system to `Makefile`, then compile the project with the build shortcut (command B or ctrl B).
+
+Extending the Firmware
+----------------------
 The most natural way to extend the firmware is to write a new device class that isn't included yet. To integrate it into the device manager, the class must extend the purely virtual (abstract) class `Device` and implement the `handleRequest` function. It should probably also have a custom constructor that takes initialization settings (pins, etc). Finally, the device needs to be given a device code and added to the `DeviceList` class's `add` function.
 
-## Make Targets
+Make Targets
+------------
 
 - `make` aliases for `make hex`
-- `make build` compiles everything and produces a .elf file
-- `make hex` converts the .elf to an Intel .hex file
+- `make build` compiles everything and produces a .elf
+- `make hex` converts the elf to an intel hex file
 - `make post_compile` opens the launcher with the correct file
-- `make upload` uploads the hex file to a Teensy board
-- `make reboot` reboots the Teensy
-- `make clean` cleans the products of Make
+- `make upload` uploads the hex file to a teensy board
+- `make reboot` reboots the teensy
 
-## Credits
+Credits
+-------
 
 - The `Makefile` is derived from the wonderful makefile at [apmorton/teensy-template](https://github.com/apmorton/teensy-template) as well as the makefile in Teensyduino: [PaulStoffregen/cores](PaulStoffregen/cores)
 - The firmware design is based on the Maple firmware used in MASLAB 2014: [jwbowler/maslab-2014](https://github.com/jwbowler/maslab-2014)
