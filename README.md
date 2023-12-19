@@ -2,7 +2,7 @@
 
 ## Purpose
 
-TAMProxy (Totally A Microcontroller Proxy) is a microcontroller project that offloads configuration, sampling, or setting of microcontroller devices/peripherals to a host computer through exchanged USB packets.
+TAMProxy (Totally A Microcontroller Proxy) is a microcontroller project offloads configuration, sampling, or setting of microcontroller devices/peripherals to a host computer through exchange USB packets.
 
 For example, running the classic Arduino blink sketch using the python host software is as simple as:
 
@@ -29,6 +29,8 @@ TAMProxy does things differently by having a formalized variable-length packet s
 TAMProxy was designed for use in MIT's MASLAB 2016 competition (autonomous robotics). It currently only supports the Teensy 3.x boards, but support for Arduinos is probably possible if development continues.
 
 ### Limitations
+Right now this firmware only works with the Teensy 3.x, with the support of the Teensyduino libraries available from PJRC
+
 Communicating with certain peripherals that need high-speed or advanced features such as interrupts, SPI, or I2C will be difficult to use if support for that peripheral isn't built into TAMProxy yet.
 
 Adding support for these peripherals is best done by extending this firmware by adding a new peripheral class, as described below. Despite the relatively high throughput of the USB packet protocol, trying to handle these high speed features oh the host side is probably infeasible.
@@ -100,17 +102,17 @@ TAMProxy 4.1 comes with a brand-new `setup.sh` that sets up TAMProxy for you.
 - [x] Sparkfun MPU-9250 IMU breakout (I2C)
 
 ## Extending the Firmware
+
 The most natural way to extend the firmware is to write a new device class that isn't included yet. To integrate it into the device manager, the class must extend the purely virtual (abstract) class `Device` and implement the `handleRequest` function. It should probably also have a custom constructor that takes initialization settings (pins, etc). Finally, the device needs to be given a device code and added to the `DeviceList` class's `add` function.
 
 ## Make Targets
 
 - `make` aliases for `make hex`
-- `make build` compiles everything and produces a .elf file
-- `make hex` converts the .elf to an Intel .hex file
+- `make build` compiles everything and produces a .elf
+- `make hex` converts the elf to an intel hex file
 - `make post_compile` opens the launcher with the correct file
-- `make upload` uploads the hex file to a Teensy board
-- `make reboot` reboots the Teensy
-- `make clean` cleans the products of Make
+- `make upload` uploads the hex file to a teensy board
+- `make reboot` reboots the teensy
 
 ## Credits
 
