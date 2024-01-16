@@ -8,17 +8,13 @@
 namespace tamproxy {
 
 // Constructor takes a dir pin and a pwm output pin
-FeedbackMotor::FeedbackMotor(uint8_t motorPinA, uint8_t motorPinB, uint8_t motorPinPWM, uint8_t encPinA, uint8_t encPinB, bool velControl) : _encPinA(encPinA), _encPinB(encPinB), _enc(encPinA, encPinB), error_prev(0.0f), integral_prev(0.0f), angle_prev(0.0f), count_prev(0) {   
-    _motorPinA = motorPinA;
-    _motorPinB = motorPinB;
-    _motorPinPWM = motorPinPWM;
+FeedbackMotor::FeedbackMotor(uint8_t dirPin, uint8_t pwmPin, uint8_t encPinA, uint8_t encPinB, bool velControl) : _encPinA(encPinA), _encPinB(encPinB), _enc(encPinA, encPinB), error_prev(0.0f), integral_prev(0.0f), angle_prev(0.0f), count_prev(0) {   
+    _dirPin = dirPin;
+    _pwmPin = pwmPin;
     _loopTime = LOOP_TIME; // [microseconds]
-    pinMode(_motorPinA, OUTPUT);
-    pinMode(_motorPinB, OUTPUT);
-    pinMode(_motorPinPWM, OUTPUT);
-    digitalWrite(_motorPinA, 0);
-    digitalWrite(_motorPinB, 0);
-    analogWrite(_motorPinPWM, 0);
+    pinMode(_dirPin, OUTPUT);
+    pinMode(_pwmPin, OUTPUT);
+    analogWrite(_pwmPin, 0);
     timestamp_prev = micros();
     desiredAngle = 0.0;
     desiredVelocity = 0.0;
@@ -51,7 +47,7 @@ std::vector<uint8_t> FeedbackMotor::handleRequest(std::vector<uint8_t> &request)
             float f;
             uint8_t b[] = {request[1], request[2], request[3], request[4]};
             memcpy(&f, &b, sizeof(f));
-            desiredAngle = 0.5*f; // JOHNZ: strange off by two error
+            desiredAngle = f;
         }
     }
     if (request[0] == ENCODER_READ_CODE) {
@@ -141,17 +137,16 @@ void FeedbackMotor::doUpkeep() {
         // determine direction of spin
         if (output > 0)
         {
-            digitalWrite(_motorPinA, 0);
-            digitalWrite(_motorPinB, 1);
+            digitalWrite(_dirPin, 0);
         }
         else
         {
-            digitalWrite(_motorPinA, 1);
-            digitalWrite(_motorPinB, 0);
+            digitalWrite(_dirPin, 1);
         }
 
+        
         // set 8-bit PWM to control speed; value between 0 and 255
-        analogWrite(_motorPinPWM, static_cast<uint8_t>(255*fabs(output)));
+        analogWrite(_pwmPin, static_cast<uint8_t>(255*fabs(output)));
 
         // saving for the next pass
         integral_prev = integral;

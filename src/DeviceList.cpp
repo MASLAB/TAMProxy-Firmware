@@ -106,13 +106,13 @@ std::vector<uint8_t> DeviceList::add(std::vector<uint8_t>& request) {
             } else { return {REQUEST_LENGTH_INVALID_CODE}; };
             break;
         case POS_FEEDBACK_MOTOR_CODE:
-            if (request.size() == 7) {
-                d = new FeedbackMotor(request[2], request[3], request[4], request[5], request[6], false);
+            if (request.size() == 6) {
+                d = new FeedbackMotor(request[2], request[3], request[4], request[5], false);
             } else { return {REQUEST_LENGTH_INVALID_CODE}; };
             break;
         case VEL_FEEDBACK_MOTOR_CODE:
-            if (request.size() == 7) {
-                d = new FeedbackMotor(request[2], request[3], request[4], request[5], request[6], true);
+            if (request.size() == 6) {
+                d = new FeedbackMotor(request[2], request[3], request[4], request[5], true);
             } else { return {REQUEST_LENGTH_INVALID_CODE}; };
             break;
         case ENCODER_CODE:
