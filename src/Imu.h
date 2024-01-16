@@ -5,6 +5,7 @@
 #include <vector>
 #include "Device.h"
 #include "MPU9250.h"
+#include "MPU6050.h"
 
 namespace tamproxy {
 

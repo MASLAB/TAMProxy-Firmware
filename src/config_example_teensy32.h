@@ -37,6 +37,7 @@
 #define ENCODER_READ_CODE 'R'
 #define ENCODER_WRITE_CODE 'W'
 #define FEEDBACK_MOTOR_CODE 'm'
+#define FEEDBACK_MOTOR_WRITE_CODE 'w'
 #define GYRO_CALIBRATE_CODE 'C'
 #define GYRO_CODE 'G'
 #define GYRO_READ_CODE 'R'

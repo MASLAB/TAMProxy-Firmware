@@ -11,6 +11,8 @@
 #include "AnalogInput.h"
 #include "AnalogOutput.h"
 #include "Motor.h"
+#include "DFRMotor.h"
+#include "FeedbackMotor.h"
 #include "Encoder.h"
 #include "Gyro.h"
 #include "Color.h"
@@ -99,6 +101,18 @@ std::vector<uint8_t> DeviceList::add(std::vector<uint8_t>& request) {
         case MOTOR_CODE:
             if (request.size() == 4) {
                 d = new Motor(request[2], request[3]);
+            } else if (request.size() == 5) { // handle DFR motor
+                d = new DFRMotor(request[2], request[3], request[4]);
+            } else { return {REQUEST_LENGTH_INVALID_CODE}; };
+            break;
+        case POS_FEEDBACK_MOTOR_CODE:
+            if (request.size() == 6) {
+                d = new FeedbackMotor(request[2], request[3], request[4], request[5], false);
+            } else { return {REQUEST_LENGTH_INVALID_CODE}; };
+            break;
+        case VEL_FEEDBACK_MOTOR_CODE:
+            if (request.size() == 6) {
+                d = new FeedbackMotor(request[2], request[3], request[4], request[5], true);
             } else { return {REQUEST_LENGTH_INVALID_CODE}; };
             break;
         case ENCODER_CODE:
