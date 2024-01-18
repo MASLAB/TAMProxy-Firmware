@@ -1,29 +1,12 @@
 #include "Gyro.h"
 #include <cstdint>
-#include "WProgram.h"
-#include "Device.h"
 #include "config.h"
-#include "SPI.h"
 
 namespace tamproxy {
 
-Gyro::Gyro(uint8_t sspin) {
-  _sspin = sspin;
-  pinMode(sspin, OUTPUT);
-  digitalWrite(sspin, HIGH);
-  SPI.begin();
-
-  // Prime the device with an initial read word
-  SPI.beginTransaction(SPISettings(CLOCK_SPEED, MSBFIRST, SPI_MODE0));
-  // Pull sspin low per 32-bit word communication
-  digitalWrite(_sspin, LOW);
-  // Send read word
-  SPI.transfer((READ_WORD >> 24) & 0xff);
-  SPI.transfer((READ_WORD >> 16) & 0xff);
-  SPI.transfer((READ_WORD >> 8) & 0xff);
-  SPI.transfer((READ_WORD >> 0) & 0xff);
-  digitalWrite(_sspin, HIGH);
-  SPI.endTransaction();
+Gyro::Gyro() {
+  init = false;
+  
 }
 
 std::vector<uint8_t> Gyro::handleRequest(std::vector<uint8_t> &request) {
