@@ -12,8 +12,9 @@ class Gyro : public Device {
 private:
   Adafruit_L3GD20 *gyro;
   bool init;
+  uint8_t _sa0pin;
 public:
-  Gyro();
+  Gyro(uint8_t sa0pin, int range);
   ~Gyro();
   std::vector<uint8_t> handleRequest(std::vector<uint8_t> &request);
 };
