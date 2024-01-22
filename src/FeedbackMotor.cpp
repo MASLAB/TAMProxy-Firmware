@@ -49,8 +49,7 @@ std::vector<uint8_t> FeedbackMotor::handleRequest(std::vector<uint8_t> &request)
             memcpy(&f, &b, sizeof(f));
             desiredAngle = f;
         }
-    }
-    if (request[0] == ENCODER_READ_CODE) {
+    } else if (request[0] == ENCODER_READ_CODE) {
         if (request.size() != 1) return {REQUEST_LENGTH_INVALID_CODE};
 
         if (velocityControl) {
