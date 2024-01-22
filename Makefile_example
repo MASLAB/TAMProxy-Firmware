@@ -11,6 +11,9 @@ OPTIONS = -DUSB_SERIAL -DLAYOUT_US_ENGLISH -DUSING_MAKEFILE -DARDUINO=10813 -DTE
 # directory to build in
 BUILDDIR = $(abspath $(CURDIR)/build)
 
+# Arduino IDE location
+ARDUINO_IDE=~/arduino-2.2.1/arduino-ide
+
 # path location for Teensy core
 # TODO: select based on $(TEENSY)
 COREPATH = cores/teensy4
@@ -144,6 +147,9 @@ reboot:
 	@-$(abspath $(REBOOTPATH))
 
 upload: post_compile reboot
+
+open:
+	$(ARDUINO_IDE)
 
 $(BUILDDIR)/%.o: %.c
 	@echo "[CC]\t$<"
