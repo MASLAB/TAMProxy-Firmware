@@ -57,10 +57,10 @@ std::vector<uint8_t> FeedbackMotor::handleRequest(std::vector<uint8_t> &request)
         if (velocityControl) {
             // send current estimated velocity
             union {
-                float c;
+                float f;
                 uint8_t bytes[4];
             } val;
-            val.c = encCount;
+            val.f = currentVelocity;
 
             return {
                 static_cast<uint8_t>(val.bytes[0]),
