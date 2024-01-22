@@ -4,6 +4,16 @@
 # DEFINE INSTALLATION ROUTINES #
 ################################
 
+CreateFiles () {
+	echo "Creating Makefile..."
+	cp Makefile_example Makefile
+
+	echo "Creating src/config.h..."
+	cp src/config_example_teensy41.h src/config.h
+
+	echo ""
+}
+
 InstallMake () {
     echo "Installing make..."
     sudo apt -y install make
@@ -83,11 +93,11 @@ echo ""
 # COPY MAKEFILE AND CONFIG FILE #
 #################################
 
-cp Makefile_example Makefile
-cp src/config_example_teensy41.h src/config.h
+CreateFiles
 
 #################
 # MAKE TAMPROXY #
 #################
 
+make clean
 make
