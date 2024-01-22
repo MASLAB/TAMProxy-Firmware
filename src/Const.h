@@ -8,5 +8,5 @@
 #define DEF_PID_VEL_LIMIT 1.0f
 #define DEF_VEL_FILTER_TF 0.001f //!< default filter time constant
 
-#define GEAR_RATIO 50.0f
+#define GEAR_RATIO 10.0f
 #define CPR 64.0f // counts per revolution
