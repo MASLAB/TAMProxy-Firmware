@@ -18,6 +18,7 @@ FeedbackMotor::FeedbackMotor(uint8_t dirPin, uint8_t pwmPin, uint8_t encPinA, ui
     timestamp_prev = micros();
     desiredAngle = 0.0;
     desiredVelocity = 0.0;
+    gearRatio = 1.0;
     velocityControl = velControl;
     if (velocityControl) {
         K = DEF_PID_VEL_K;
@@ -35,7 +36,7 @@ FeedbackMotor::FeedbackMotor(uint8_t dirPin, uint8_t pwmPin, uint8_t encPinA, ui
 
 std::vector<uint8_t> FeedbackMotor::handleRequest(std::vector<uint8_t> &request) {
     if (request[0] == FEEDBACK_MOTOR_WRITE_CODE) {
-        if (request.size() != 5) return {REQUEST_LENGTH_INVALID_CODE};
+        if (request.size() != 6) return {REQUEST_LENGTH_INVALID_CODE};
 
         if (velocityControl)
         {
@@ -48,6 +49,26 @@ std::vector<uint8_t> FeedbackMotor::handleRequest(std::vector<uint8_t> &request)
             uint8_t b[] = {request[1], request[2], request[3], request[4]};
             memcpy(&f, &b, sizeof(f));
             desiredAngle = f;
+        }
+
+        if (request[6] == 0) {
+            gearRatio = GEAR_RATIO_0;
+        } else if (request[6] == 1) {
+            gearRatio = GEAR_RATIO_1;
+        } else if (request[6] == 2) {
+            gearRatio = GEAR_RATIO_2;
+        } else if (request[6] == 3) {
+            gearRatio = GEAR_RATIO_3;
+        } else if (request[6] == 4) {
+            gearRatio = GEAR_RATIO_4;
+        } else if (request[6] == 5) {
+            gearRatio = GEAR_RATIO_5;
+        } else if (request[6] == 6) {
+            gearRatio = GEAR_RATIO_6;
+        } else if (request[6] == 7) {
+            gearRatio = GEAR_RATIO_7;
+        } else {
+            gearRatio = 1;
         }
     }
 
@@ -97,7 +118,7 @@ void FeedbackMotor::doUpkeep() {
 
         uint32_t rawEncoderCount = static_cast<uint32_t>(_enc.read());
         encCount += int32_t(rawEncoderCount - encCount); // needed to handle int overflow correctly
-        float currentAngle = 2.0*M_PI*encCount/(CPR*GEAR_RATIO);
+        float currentAngle = 2.0*M_PI*encCount/(CPR*gearRatio);
 
         if (velocityControl) {
             // estimate velocity

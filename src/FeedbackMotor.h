@@ -10,6 +10,9 @@
 // contains constants for control loops
 #include "Const.h"
 
+// Contains common gear ratios
+#include "GearRatio.h"
+
 // A class that that controls motor controllers that take a dir and pwm inputs
 
 namespace tamproxy {
@@ -25,6 +28,8 @@ private:
     float desiredAngle;
     float desiredVelocity;
     float currentVelocity;
+
+    float gearRatio;
 
     ::Encoder _enc;
     volatile uint32_t _count;
