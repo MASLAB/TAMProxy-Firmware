@@ -102,7 +102,7 @@ void FeedbackMotor::doUpkeep() {
         if (velocityControl) {
             // estimate velocity
             float estimatedVelocity = (currentAngle - angle_prev)/Ts;
-            float alpha = 0.98;
+            float alpha = LP_FILTER_ALPHA;
             currentVelocity = alpha*currentVelocity + (1-alpha)*estimatedVelocity;
 
             error = desiredVelocity - currentVelocity;
