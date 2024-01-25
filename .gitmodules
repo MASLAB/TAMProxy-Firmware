@@ -29,3 +29,6 @@
 [submodule "libraries/Adafruit_L3GD20"]
 	path = libraries/Adafruit_L3GD20
 	url = https://github.com/adafruit/Adafruit_L3GD20.git
+[submodule "libraries/SparkFun_BNO08x_Arduino_Library"]
+	path = libraries/SparkFun_BNO08x_Arduino_Library
+	url = https://github.com/sparkfun/SparkFun_BNO08x_Arduino_Library.git
