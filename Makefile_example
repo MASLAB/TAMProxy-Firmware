@@ -21,7 +21,7 @@ COREPATH = cores/teensy4
 # path location for Arduino libraries
 LIBRARYPATH = libraries
 
-LIBRARIES = $(LIBRARYPATH)/Wire $(LIBRARYPATH)/Encoder $(LIBRARYPATH)/SPI $(LIBRARYPATH)/Servo $(LIBRARYPATH)/Adafruit_TCS34725 $(LIBRARYPATH)/vl53l0x-arduino $(LIBRARYPATH)/SparkFun_MPU-9250_Breakout_Arduino_Library
+LIBRARIES = $(wildcard $(LIBRARYPATH)/*)
 
 #************************************************************************
 # Location of Teensyduino utilities, Toolchain, and Arduino Libraries.
