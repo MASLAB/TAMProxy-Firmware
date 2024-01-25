@@ -29,9 +29,3 @@
 [submodule "libraries/Adafruit_L3GD20"]
 	path = libraries/Adafruit_L3GD20
 	url = https://github.com/adafruit/Adafruit_L3GD20.git
-[submodule "libraries/Adafruit_BNO055"]
-	path = libraries/Adafruit_BNO055
-	url = https://github.com/adafruit/Adafruit_BNO055.git
-[submodule "libraries/Adafruit_BNO08x"]
-	path = libraries/Adafruit_BNO08x
-	url = https://github.com/adafruit/Adafruit_BNO08x.git
