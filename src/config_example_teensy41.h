@@ -37,7 +37,7 @@
 #define POS_FEEDBACK_MOTOR_CODE 'p'
 #define VEL_FEEDBACK_MOTOR_CODE 'v'
 #define FEEDBACK_MOTOR_WRITE_CODE 'w'
-#define GYRO_CALIBRATE_CODE 'C'
+// #define GYRO_CALIBRATE_CODE 'C'
 #define GYRO_CODE 'G'
 #define GYRO_READ_CODE 'R'
 #define IR_CODE 'I'

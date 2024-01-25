@@ -26,3 +26,9 @@
 [submodule "libraries/mpu6050"]
 	path = libraries/mpu6050
 	url = https://github.com/ElectronicCats/mpu6050.git
+[submodule "libraries/Adafruit_L3GD20"]
+	path = libraries/Adafruit_L3GD20
+	url = https://github.com/adafruit/Adafruit_L3GD20.git
+[submodule "libraries/Adafruit_BNO055"]
+	path = libraries/Adafruit_BNO055
+	url = https://github.com/adafruit/Adafruit_BNO055.git
