@@ -33,9 +33,9 @@ std::vector<uint8_t> Gyro::handleRequest(std::vector<uint8_t> &request) {
       digitalWrite(_sa0pin, LOW);
       gyro->read();
       digitalWrite(_sa0pin, HIGH);
-      int16_t x = gyro->data.x;
-      int16_t y = gyro->data.y;
-      int16_t z = gyro->data.z;
+      int16_t x = static_cast<int16_t>(gyro->data.x*1000);
+      int16_t y = static_cast<int16_t>(gyro->data.y*1000);
+      int16_t z = static_cast<int16_t>(gyro->data.z*1000);
       
       return {
         static_cast<uint8_t>((x >> 8) & 0xff),
