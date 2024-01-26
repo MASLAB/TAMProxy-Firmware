@@ -65,22 +65,22 @@ void Imu::doUpkeep() {
   digitalWrite(_dipin, HIGH);
   if(init) {
     if(sensor->getSensorEvent()) {
-      // Multiplying all these float results to 1000 for extra range
+      // Multiplying all these float results to 100 for extra range
       switch (sensor->getSensorEventID()) {
-        case SENSOR_REPORTID_LINEAR_ACCELERATION: // m/s^2 * 1000
-          ax = static_cast<int16_t>(sensor->getLinAccelX()*1000);
-          ay = static_cast<int16_t>(sensor->getLinAccelY()*1000);
-          az = static_cast<int16_t>(sensor->getLinAccelZ()*1000);
+        case SENSOR_REPORTID_LINEAR_ACCELERATION: // m/s^2 * 100
+          ax = static_cast<int16_t>(sensor->getLinAccelX()*100);
+          ay = static_cast<int16_t>(sensor->getLinAccelY()*100);
+          az = static_cast<int16_t>(sensor->getLinAccelZ()*100);
           break;
-        case SENSOR_REPORTID_GYROSCOPE_CALIBRATED: // rad/s * 1000
-          gx = static_cast<int16_t>(sensor->getGyroX()*1000);
-          gy = static_cast<int16_t>(sensor->getGyroY()*1000);
-          gz = static_cast<int16_t>(sensor->getGyroZ()*1000);
+        case SENSOR_REPORTID_GYROSCOPE_CALIBRATED: // rad/s * 100
+          gx = static_cast<int16_t>(sensor->getGyroX()*100);
+          gy = static_cast<int16_t>(sensor->getGyroY()*100);
+          gz = static_cast<int16_t>(sensor->getGyroZ()*100);
           break;
-        case SENSOR_REPORTID_MAGNETIC_FIELD: // uTesla * 1000
-          mx = static_cast<int16_t>(sensor->getMagX()*1000);
-          my = static_cast<int16_t>(sensor->getMagY()*1000);
-          mz = static_cast<int16_t>(sensor->getMagZ()*1000);   
+        case SENSOR_REPORTID_MAGNETIC_FIELD: // uTesla * 100
+          mx = static_cast<int16_t>(sensor->getMagX()*100);
+          my = static_cast<int16_t>(sensor->getMagY()*100);
+          mz = static_cast<int16_t>(sensor->getMagZ()*100);   
           break;
       }
     }
