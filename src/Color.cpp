@@ -8,6 +8,7 @@ Color::Color() {
   init = false;
   ams = new Adafruit_AS726x();
   init = ams->begin();
+  if(init) ams->drvOn();
 }
 
 Color::~Color() {
