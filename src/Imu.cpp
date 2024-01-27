@@ -5,19 +5,15 @@
 
 namespace tamproxy {
 
-Imu::Imu(uint8_t dipin) {
+Imu::Imu() {
   init = false;
-  _dipin = dipin;
   sensor = new BNO08x();
-  pinMode(_dipin, OUTPUT);
-  digitalWrite(_dipin, HIGH);
   delay(10);
   Wire.begin();
-  init = sensor->begin(0x4B, Wire, -1, -1);
+  init = sensor->begin(0x4A, Wire, -1, -1);
   init &= sensor->enableLinearAccelerometer();
   init &= sensor->enableGyro(SH2_GYROSCOPE_CALIBRATED);
   init &= sensor->enableMagnetometer(SH2_MAGNETIC_FIELD_CALIBRATED);
-  digitalWrite(_dipin, LOW);
 }
 
 Imu::~Imu() {
@@ -53,16 +49,15 @@ std::vector<uint8_t> Imu::handleRequest(std::vector<uint8_t> &request) {
       };
     } else {
       return {
-        0,0,0,0,0,0,
-        0,0,0,0,0,0,
-        0,0,0,0,0,0
+        0xff,0xff,0xff,0xff,0xff,0xff,
+        0xff,0xff,0xff,0xff,0xff,0xff,
+        0xff,0xff,0xff,0xff,0xff,0xff
       };
     }
   }
 }
 
 void Imu::doUpkeep() {
-  digitalWrite(_dipin, HIGH);
   if(init) {
     if(sensor->getSensorEvent()) {
       // Multiplying all these float results to 100 for extra range
@@ -85,7 +80,6 @@ void Imu::doUpkeep() {
       }
     }
   }
-  digitalWrite(_dipin, LOW);
 }
 
 }
