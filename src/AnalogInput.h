@@ -11,9 +11,11 @@ namespace tamproxy {
 class AnalogInput : public Device {
 private:
     uint8_t _pin;
+    uint16_t currentVoltage;
 public:
     AnalogInput(uint8_t pin);
     std::vector<uint8_t> handleRequest(std::vector<uint8_t> &request);
+    void doUpkeep();
 };
 
 }
